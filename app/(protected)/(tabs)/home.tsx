@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -100,48 +100,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  overlayHeader: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
-  },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    gap: 12,
-  },
-  searchPill: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    height: 45,
-    borderRadius: 25,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#e5e5e5",
-  },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-  },
-  iconCircle: {
-    width: 45,
-    height: 45,
-    borderRadius: 25,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#e5e5e5",
-  },
   scrollContent: {
     paddingBottom: 100,
   },
@@ -193,8 +151,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   productSection: {
-    width: "100%",
+    width: "90%",
+    justifyContent: "center",
+    alignSelf: "center",
+    paddingBottom: 40,
     marginBottom: 40,
+    // The sleek gray divider line
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
   },
   imageContainer: {
     width: "100%",
