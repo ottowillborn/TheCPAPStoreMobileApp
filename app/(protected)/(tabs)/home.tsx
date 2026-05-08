@@ -1,110 +1,108 @@
-import { Package } from "lucide-react-native";
-import React, { useState } from "react";
+import { Plus, Search, ShoppingBag } from "lucide-react-native";
+import React from "react";
 import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
-const LOGO_IMAGE = require("../../../assets/images/logo_cpap_2025_2.png");
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-const PRIMARY_COLOR = "#202057"; // rgb(32, 32, 87)
+const DUMMY_REORDERS = [
+  {
+    id: "1",
+    title: "AirMini™ Tubing",
+    sub: "Flexible, lightweight, and essential.",
+    price: "$50.00 CAD",
+    image: require("@/assets/images/airminitubing.png"),
+  },
+  {
+    id: "2",
+    title: "Standard HumidX™",
+    sub: "Waterless humidification for travel.",
+    price: "$50.00 CAD",
+    image: require("@/assets/images/humidx.png"),
+  },
+  {
+    id: "3",
+    title: "Lunar Tube Adapter",
+    sub: "Seamless connection for your setup.",
+    price: "$27.00 CAD",
+    image: require("@/assets/images/lunartubeadapter.png"),
+  },
+];
 
 export default function Dashboard() {
-  const [cartCount, setCartCount] = useState(0);
-
-  const previousOrders = [
-    {
-      id: "1",
-      name: "AirFit N20 Nasal Mask",
-      price: 89.99,
-      lastOrdered: "March 2026",
-      image: "mask",
-      color: "#3b82f6", // blue
-    },
-    {
-      id: "2",
-      name: "Disposable Filters (6-pack)",
-      price: 24.99,
-      lastOrdered: "February 2026",
-      image: "filters",
-      color: "#10b981", // green
-    },
-    {
-      id: "3",
-      name: "Heated Tubing",
-      price: 45.99,
-      lastOrdered: "January 2026",
-      image: "tubing",
-      color: "#a855f7", // purple
-    },
-    {
-      id: "4",
-      name: "Mask Cushion Replacement",
-      price: 34.99,
-      lastOrdered: "March 2026",
-      image: "cushion",
-      color: "#f97316", // orange
-    },
-  ];
-
-  const handleQuickOrder = (itemName: string) => {
-    setCartCount((prev) => prev + 1);
-    console.log(`Added ${itemName} to cart`);
-  };
-
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
+      <SafeAreaView style={styles.overlayHeader}>
+        <View style={styles.headerRow}>
+          <View style={styles.searchPill}>
+            <Search size={20} color="#000" style={styles.searchIcon} />
+            <TextInput
+              placeholder="Search products..."
+              placeholderTextColor="#717171"
+              style={styles.searchInput}
+            />
+          </View>
+          <TouchableOpacity style={styles.iconCircle}>
+            <ShoppingBag size={24} color="#000" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
 
-      {/* Main Content */}
       <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
       >
-        {/* Membership Badge */}
-        <View style={styles.membershipCard}>
-          <View style={styles.membershipIcon}>
-            <Text style={{ fontSize: 24 }}>⭐</Text>
-          </View>
-          <View>
-            <Text style={styles.membershipTitle}>Free Member</Text>
-            <Text style={styles.membershipSub}>
-              Enjoying member-only prices
+        <ImageBackground
+          source={require("@/assets/images/goodsleep.jpg")}
+          style={styles.heroFrame}
+          resizeMode="cover"
+        >
+          <View style={styles.heroOverlay}>
+            <Text style={styles.heroTitle}>Product{"\n"}Replenishment</Text>
+            <Text style={styles.heroSub}>
+              Easily reorder your CPAP essentials in just one tap.
             </Text>
+            <TouchableOpacity style={styles.heroButton}>
+              <Text style={styles.heroButtonText}>Shop All</Text>
+            </TouchableOpacity>
           </View>
+        </ImageBackground>
+
+        <View style={styles.sectionDivider}>
+          <Text style={styles.sectionLabel}>PREVIOUSLY ORDERED</Text>
         </View>
 
-        {/* Previously Ordered Section */}
-        <Text style={styles.sectionTitle}>Previously Ordered</Text>
+        {DUMMY_REORDERS.map((item) => (
+          <View key={item.id} style={styles.productSection}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={item.image}
+                style={styles.adaptiveImage}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={styles.productDetails}>
+              <Text style={styles.productTitle}>{item.title}</Text>
+              <Text style={styles.productSub}>{item.sub}</Text>
 
-        {previousOrders.map((item) => (
-          <View key={item.id} style={styles.orderCard}>
-            <View style={styles.orderInfoRow}>
-              <View
-                style={[styles.iconBox, { backgroundColor: `${item.color}15` }]}
-              >
-                <Package size={32} color={item.color} />
-              </View>
-              <View style={styles.orderTextDetails}>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.lastOrdered}>
-                  Last ordered: {item.lastOrdered}
-                </Text>
-                <Text style={styles.price}>${item.price}</Text>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceText}>{item.price}</Text>
+                <TouchableOpacity style={styles.quickAddButton}>
+                  <Plus size={16} color="#fff" />
+                  <Text style={styles.quickAddText}>Quick Add</Text>
+                </TouchableOpacity>
               </View>
             </View>
-
-            <TouchableOpacity
-              style={styles.reorderButton}
-              onPress={() => handleQuickOrder(item.name)}
-            >
-              <Text style={styles.reorderButtonText}>Quick Reorder</Text>
-            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
@@ -115,176 +113,155 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f9fafb",
-  },
-  header: {
-    backgroundColor: PRIMARY_COLOR,
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
-  headerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  logo: {
-    height: 40,
-    width: 120,
-  },
-  cartButton: {
-    padding: 4,
-  },
-  badge: {
-    position: "absolute",
-    top: -5,
-    right: -5,
-    backgroundColor: "#ef4444",
-    borderRadius: 10,
-    height: 18,
-    width: 18,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  badgeText: {
-    color: "#fff",
-    fontSize: 10,
-    fontWeight: "bold",
-  },
-  welcomeSection: {
-    marginBottom: 10,
-  },
-  welcomeBack: {
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: 14,
-  },
-  userName: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "700",
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-  scrollContent: {
-    paddingTop: 24,
-    paddingBottom: 100, // Extra space for bottom nav
-  },
-  membershipCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fef9c3", // yellow-100
-    borderWidth: 1,
-    borderColor: "#fde047", // yellow-300
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 24,
-    gap: 12,
-  },
-  membershipIcon: {
-    width: 48,
-    height: 48,
-    backgroundColor: "#facc15", // yellow-400
-    borderRadius: 24,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  membershipTitle: {
-    fontWeight: "600",
-    color: "#713f12",
-    fontSize: 16,
-  },
-  membershipSub: {
-    fontSize: 13,
-    color: "#a16207",
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#1f2937",
-    marginBottom: 16,
-  },
-  orderCard: {
     backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#f3f4f6",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
   },
-  orderInfoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16,
-  },
-  iconBox: {
-    width: 64,
-    height: 64,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  orderTextDetails: {
-    flex: 1,
-  },
-  itemName: {
-    fontWeight: "600",
-    fontSize: 14,
-    color: "#1f2937",
-    marginBottom: 4,
-  },
-  lastOrdered: {
-    fontSize: 12,
-    color: "#6b7280",
-    marginBottom: 4,
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: PRIMARY_COLOR,
-  },
-  reorderButton: {
-    backgroundColor: PRIMARY_COLOR,
-    height: 48,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 16,
-  },
-  reorderButtonText: {
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: 15,
-  },
-  bottomNav: {
+  overlayHeader: {
     position: "absolute",
-    bottom: 0,
+    top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#fff",
+    zIndex: 10,
+  },
+  headerRow: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 12,
-    paddingBottom: 30, // For home indicator on iPhone
-    borderTopWidth: 1,
-    borderTopColor: "#f3f4f6",
-  },
-  navItem: {
     alignItems: "center",
-    gap: 4,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    gap: 12,
   },
-  navText: {
+  searchPill: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    height: 45,
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+  },
+  iconCircle: {
+    width: 45,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+  },
+  scrollContent: {
+    paddingBottom: 100,
+  },
+  heroFrame: {
+    width: "100%",
+    height: SCREEN_HEIGHT * 0.7,
+    justifyContent: "flex-end",
+  },
+  heroOverlay: {
+    padding: 30,
+    paddingBottom: 60,
+    backgroundColor: "rgba(0,0,0,0.2)",
+  },
+  heroTitle: {
+    color: "#fff",
+    fontSize: 40,
+    fontWeight: "300",
+    lineHeight: 46,
+    marginBottom: 15,
+  },
+  heroSub: {
+    color: "#fff",
+    fontSize: 17,
+    marginBottom: 25,
+    lineHeight: 24,
+  },
+  heroButton: {
+    backgroundColor: "#fff",
+    alignSelf: "flex-start",
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+  },
+  heroButtonText: {
+    color: "#000",
+    fontWeight: "700",
+    textTransform: "uppercase",
+    fontSize: 11,
+    letterSpacing: 1,
+  },
+  sectionDivider: {
+    paddingVertical: 30,
+    paddingHorizontal: 24,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 2,
+    color: "#000",
+    textAlign: "center",
+  },
+  productSection: {
+    width: "100%",
+    marginBottom: 40,
+  },
+  imageContainer: {
+    width: "100%",
+    height: 350,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  adaptiveImage: {
+    width: "100%",
+    height: "100%",
+  },
+  productDetails: {
+    paddingHorizontal: 24,
+    paddingTop: 20,
+  },
+  productTitle: {
+    color: "#000",
+    fontSize: 28,
+    fontWeight: "400",
+    marginBottom: 4,
+  },
+  productSub: {
+    color: "#666",
+    fontSize: 15,
+    marginBottom: 8,
+  },
+  priceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  priceText: {
+    color: "#000",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  quickAddButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#000",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 25,
+    gap: 6,
+  },
+  quickAddText: {
+    color: "#fff",
+    fontWeight: "700",
+    textTransform: "uppercase",
     fontSize: 10,
-    color: "#9ca3af",
-    fontWeight: "500",
+    letterSpacing: 1,
   },
 });
