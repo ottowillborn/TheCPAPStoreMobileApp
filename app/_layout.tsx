@@ -8,7 +8,16 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
         }}
-      />
+      >
+        <Stack.Screen
+          name="(protected)/(tabs)"
+          options={{
+            headerShown: false,
+            animation: "fade",
+            animationDuration: 500,
+          }}
+        />
+      </Stack>
     </SafeAreaProvider>
   );
 }
