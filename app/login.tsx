@@ -12,12 +12,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const insets = useSafeAreaInsets();
 
   const handleLogin = () => {
     console.log("Login attempted with:", { email, password });
@@ -27,14 +31,17 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: insets.bottom }}
+          bounces={false}
+        >
           {/* Header Section */}
-          <View style={styles.header}>
+          <View style={[styles.header, { paddingTop: insets.top + 40 }]}>
             <View style={styles.logoContainer}>
               <Image
                 source={require("@/assets/images/logo_cpap_2025_2.png")}
@@ -127,7 +134,7 @@ export default function LoginScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 }
 
