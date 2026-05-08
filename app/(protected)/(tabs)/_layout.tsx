@@ -1,58 +1,76 @@
 import { Tabs } from "expo-router";
-import { Home, Menu, ShoppingCart, User, Users } from "lucide-react-native";
-import { StyleSheet, View } from "react-native";
-
-const PRIMARY_COLOR = "#202057";
+import { Moon, ShoppingBag, ShoppingCart, User } from "lucide-react-native";
+import { StyleSheet } from "react-native";
 
 export default function TabLayout() {
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: "#000",
-          tabBarInactiveTintColor: "#717171",
-          headerShown: false,
-          tabBarStyle: styles.tabBar,
-          tabBarLabelStyle: styles.tabBarLabel,
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: "#323287",
+        tabBarInactiveTintColor: "#717171",
+        headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarItemStyle: {
+          justifyContent: "center",
+          alignItems: "center",
+          height: 55, // Match this to tabBarStyle height for perfect centering
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "For You",
+          tabBarIcon: ({ color, focused }) => (
+            <Moon
+              size={18}
+              color={color}
+              fill={focused ? "#323287c4" : "none"}
+            />
+          ),
         }}
-      >
-        <Tabs.Screen
-          name="home"
-          options={{
-            title: "For You",
-            tabBarIcon: ({ color }) => <Home size={22} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="browse"
-          options={{
-            title: "Shop",
-            tabBarIcon: ({ color }) => <Menu size={22} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="members"
-          options={{
-            title: "Members",
-            tabBarIcon: ({ color }) => <Users size={22} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="cart"
-          options={{
-            title: "Store",
-            tabBarIcon: ({ color }) => <ShoppingCart size={22} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="account"
-          options={{
-            title: "Account",
-            tabBarIcon: ({ color }) => <User size={22} color={color} />,
-          }}
-        />
-      </Tabs>
-    </View>
+      />
+      <Tabs.Screen
+        name="browse"
+        options={{
+          title: "Shop",
+          tabBarIcon: ({ color, focused }) => (
+            <ShoppingBag
+              size={18}
+              color={color}
+              fill={focused ? "#323287c4" : "none"}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: "Cart",
+          tabBarIcon: ({ color, focused }) => (
+            <ShoppingCart
+              size={18}
+              color={color}
+              fill={focused ? "#323287c4" : "none"}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="account"
+        options={{
+          title: "Account",
+          tabBarIcon: ({ color, focused }) => (
+            <User
+              size={18}
+              color={color}
+              fill={focused ? "#323287c4" : "none"}
+            />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
 
@@ -60,23 +78,26 @@ const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
     bottom: 30,
-    left: 20,
-    right: 20,
-    height: 65,
-    borderRadius: 35,
-    backgroundColor: "#ffffff",
+
+    marginHorizontal: 20,
+
+    height: 50,
+    borderRadius: 30,
+
+    backgroundColor: "#fff",
     borderTopWidth: 0,
-    // Shadow for the floating effect
+
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-    paddingBottom: 0, // Reset default padding
+    shadowRadius: 15,
+    elevation: 8,
+
+    paddingBottom: 0,
   },
   tabBarLabel: {
-    fontSize: 11,
-    fontWeight: "600",
-    marginBottom: 8,
+    fontSize: 10,
+    fontWeight: "700",
+    marginTop: -4,
   },
 });

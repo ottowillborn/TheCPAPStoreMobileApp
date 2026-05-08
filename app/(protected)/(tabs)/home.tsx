@@ -1,16 +1,15 @@
-import { Plus, Search, ShoppingBag } from "lucide-react-native";
+import SearchHeader from "@/app/components/SearchHeader";
+import { Plus } from "lucide-react-native";
 import React from "react";
 import {
   Dimensions,
   Image,
   ImageBackground,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -42,21 +41,7 @@ const DUMMY_REORDERS = [
 export default function Dashboard() {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.overlayHeader}>
-        <View style={styles.headerRow}>
-          <View style={styles.searchPill}>
-            <Search size={20} color="#000" style={styles.searchIcon} />
-            <TextInput
-              placeholder="Search products..."
-              placeholderTextColor="#717171"
-              style={styles.searchInput}
-            />
-          </View>
-          <TouchableOpacity style={styles.iconCircle}>
-            <ShoppingBag size={24} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      <SearchHeader />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -168,7 +153,7 @@ const styles = StyleSheet.create({
   heroOverlay: {
     padding: 30,
     paddingBottom: 60,
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
   heroTitle: {
     color: "#fff",
