@@ -1,13 +1,11 @@
-import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import LoginScreen from "./screens/login_screen";
+import { Redirect } from "expo-router";
 
-export default function App() {
-  return (
-    <>
-      <SafeAreaProvider>
-        <LoginScreen />
-      </SafeAreaProvider>
-    </>
-  );
+export default function Index() {
+  const loggedIn = false;
+
+  if (!loggedIn) {
+    return <Redirect href="/login" />;
+  }
+
+  return <Redirect href="/home" />;
 }

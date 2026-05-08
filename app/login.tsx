@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Eye, EyeOff, Moon } from "lucide-react-native";
 import React, { useState } from "react";
 import {
@@ -20,6 +21,9 @@ export default function LoginScreen() {
 
   const handleLogin = () => {
     console.log("Login attempted with:", { email, password });
+    // TODO: Implement actual authentication logic here
+    // If successful, navigate to onboarding or home based on user status
+    router.replace("/onboarding");
   };
 
   return (
