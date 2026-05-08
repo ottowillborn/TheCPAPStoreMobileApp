@@ -1,50 +1,81 @@
-# Welcome to your Expo app 👋
+# CPAP Mobile Connect
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+CPAP Mobile Connect is a dedicated mobile application designed to transition a web-only e-commerce model into a high-frequency supply renewal ecosystem.
 
-## Get started
+By integrating directly with existing Shopify storefronts and Gorgias support desks, the application minimizes development friction while maximizing customer retention.
 
-1. Install dependencies
+The app transforms medical supply maintenance into a frictionless mobile experience through automated logic and AI-driven support.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## Core Features
 
-   ```bash
-   npx expo start
-   ```
+### 1. One-Tap Replenishment
+Utilizes the **Shopify Storefront API** to bypass traditional multi-step e-commerce flows:
 
-In the output, you'll find options to open the app in a
+- **Persistent Order History:** Automatically identifies exact SKUs (e.g., specific mask sizes) from the user's Shopify account history.
+- **Zero-Search Interface:** Dynamically surfaces a "Ready to Reorder?" card on the home screen featuring the user's exact setup.
+- **Pre-filled Checkout:** Programmatically creates checkout objects with default shipping and payment methods, allowing completion in under 30 seconds.
+- **Real-time Availability:** Performs background stock checks via API before presenting reorder options.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 2. Automated Renewal Reminders
+Aligned with clinical guidelines for replacing masks (90 days) and filters (30 days):
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Event-Based Triggers:** A 60-day countdown begins once a purchase is marked "Fulfilled" in the Shopify backend.
+- **Smart Deep-Linking:** Push notifications take users directly to the pre-filled checkout screen.
+- **Educational Context:** Notifications include therapy effectiveness notes to reinforce replacement importance.
 
-## Get a fresh project
+### 3. Support & AI Ecosystem
+- **Native Gorgias Live Chat:** Implementation of the Gorgias Mobile SDK allows for unified ticket history between web and mobile platforms.
+- **Grounded AI Assistant:** A RAG-based LLM layer trained on company-specific manuals and FAQs to resolve common queries (tracking, troubleshooting) before human escalation.
 
-When you're ready, run:
+---
+
+## Technical Stack
+
+- **Frontend:** React Native / Expo (iOS & Android)
+- **Backend Integration:** Shopify Storefront API & Gorgias HTTP Request API
+- **AI Layer:** RAG-based LLM (Gemini/OpenAI) using a private knowledge base
+
+---
+
+## Running the Development Build
+
+### Prerequisites
+Before starting the app, ensure the following are installed:
+
+- Node.js (LTS recommended)
+- npm or yarn
+- Expo CLI dependencies
+- Android Studio and/or Xcode for emulator support
+
+### Install Dependencies
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Start the Expo Development Server
 
-## Learn more
+```bash
+npx expo start
+```
+This will launch the Expo development server and open the Expo Developer Tools in your browser.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Running on a Device or Emulator
+After starting the server:
+* Press `a` to launch the Android Emulator
+* Press `i` to launch the iOS (macOS only)
+* Or Scan the QR code to use Expo Go on a physical device  
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Clearing the Metro Cache
+If you encounter building or dependecy issues:
+```bash
+npx expo start --clear
+```
 
-## Join the community
 
-Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
