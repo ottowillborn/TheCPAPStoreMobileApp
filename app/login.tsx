@@ -21,36 +21,32 @@ export default function LoginScreen() {
 
   const handleLogin = () => {
     console.log("Login attempted with:", { email, password });
+    // TODO: Implement actual authentication logic here
+    // If successful, navigate to onboarding or home based on user status
     router.replace("/onboarding");
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
-      {/* TOP SAFE AREA (blue background) */}
-      <SafeAreaView
-        edges={["top"]}
-        style={{ backgroundColor: "rgb(32, 32, 87)" }}
-      >
-        <View style={styles.header}>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("@/assets/images/logo_cpap_2025_2.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
-          <Text style={styles.headerSubtitle}>
-            Helping you on your sleep therapy journey
-          </Text>
-        </View>
-      </SafeAreaView>
-
-      {/* MAIN CONTENT */}
+    <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1, backgroundColor: "#fff" }}
+        style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
+          {/* Header Section */}
+          <View style={styles.header}>
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("@/assets/images/logo_cpap_2025_2.png")}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={styles.headerSubtitle}>
+              Helping you on your sleep therapy journey
+            </Text>
+          </View>
+
           {/* Form Section */}
           <View style={styles.formContainer}>
             <View style={styles.welcomeSection}>
@@ -60,7 +56,7 @@ export default function LoginScreen() {
               </Text>
             </View>
 
-            {/* Email */}
+            {/* Email Input */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Email</Text>
               <TextInput
@@ -73,7 +69,7 @@ export default function LoginScreen() {
               />
             </View>
 
-            {/* Password */}
+            {/* Password Input */}
             <View style={styles.inputGroup}>
               <View style={styles.labelRow}>
                 <Text style={styles.label}>Password</Text>
@@ -81,7 +77,6 @@ export default function LoginScreen() {
                   <Text style={styles.forgotText}>Forgot?</Text>
                 </TouchableOpacity>
               </View>
-
               <View style={styles.passwordWrapper}>
                 <TextInput
                   style={[styles.input, { flex: 1 }]}
@@ -103,7 +98,7 @@ export default function LoginScreen() {
               </View>
             </View>
 
-            {/* Button */}
+            {/* Sign In Button */}
             <TouchableOpacity
               style={styles.signInButton}
               onPress={handleLogin}
@@ -120,7 +115,7 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          {/* Footer */}
+          {/* Assistance Footer */}
           <View style={styles.assistanceFooter}>
             <Text style={styles.assistanceText}>
               Need assistance with your device?
@@ -137,6 +132,10 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "rgb(32, 32, 87)",
+  },
   header: {
     paddingTop: 40,
     paddingBottom: 50,
