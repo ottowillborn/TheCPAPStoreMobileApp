@@ -1,5 +1,5 @@
 import { Search, ShoppingBag } from "lucide-react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,14 +8,67 @@ import {
     View,
 } from "react-native";
 
+// Only include the dynamic parts here
+const KEYWORDS = [
+  "cpap masks",
+  "cpap machines",
+  "cpap filters",
+  "cpap accessories",
+  "oxygen concentrators",
+  "oxygen supplies",
+];
+
 const SearchHeader = () => {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [reverse, setReverse] = useState(false);
+
+  const staticPrefix = "Search for ";
+
+  const getCommonPrefixLength = (str1: string, str2: string) => {
+    let i = 0;
+    while (i < str1.length && i < str2.length && str1[i] === str2[i]) {
+      i++;
+    }
+    return i;
+  };
+
+  useEffect(() => {
+    const currentWord = KEYWORDS[index];
+    const nextWord = KEYWORDS[(index + 1) % KEYWORDS.length];
+    const commonPrefixLen = getCommonPrefixLength(currentWord, nextWord);
+
+    // Pause at the end of a word
+    if (subIndex === currentWord.length && !reverse) {
+      const timeout = setTimeout(() => setReverse(true), 1500);
+      return () => clearTimeout(timeout);
+    }
+
+    // Switch to next word once we've deleted back to the commonality
+    if (subIndex === commonPrefixLen && reverse) {
+      setReverse(false);
+      setIndex((prev) => (prev + 1) % KEYWORDS.length);
+      return;
+    }
+
+    const timeout = setTimeout(
+      () => {
+        setSubIndex((prev) => prev + (reverse ? -1 : 1));
+      },
+      reverse ? 40 : 80,
+    );
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, reverse]);
+
   return (
     <SafeAreaView style={styles.overlayHeader}>
       <View style={styles.headerRow}>
         <View style={styles.searchPill}>
           <Search size={20} color="#000" style={styles.searchIcon} />
           <TextInput
-            placeholder="Search products..."
+            // Combine the static prefix with the animated slice
+            placeholder={`${staticPrefix}${KEYWORDS[index].substring(0, subIndex)}`}
             placeholderTextColor="#717171"
             style={styles.searchInput}
           />
