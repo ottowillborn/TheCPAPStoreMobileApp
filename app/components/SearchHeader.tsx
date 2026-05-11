@@ -1,11 +1,12 @@
-import { Search, ShoppingBag } from "lucide-react-native";
+import { useSupport } from "@/context/SupportContext";
+import { MessageCircleQuestionIcon, Search } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
-    SafeAreaView,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 // Only include the dynamic parts here
@@ -22,6 +23,7 @@ const SearchHeader = () => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
+  const { toggleSupport } = useSupport();
 
   const staticPrefix = "Search for ";
 
@@ -73,8 +75,8 @@ const SearchHeader = () => {
             style={styles.searchInput}
           />
         </View>
-        <TouchableOpacity style={styles.iconCircle}>
-          <ShoppingBag size={24} color="#000" />
+        <TouchableOpacity style={styles.iconCircle} onPress={toggleSupport}>
+          <MessageCircleQuestionIcon size={24} color="#000" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
