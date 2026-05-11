@@ -1,4 +1,5 @@
 import SearchHeader from "@/app/components/SearchHeader";
+import { useCart } from "@/context/CartContext";
 import { Plus } from "lucide-react-native";
 import React from "react";
 import {
@@ -39,6 +40,7 @@ const DUMMY_REORDERS = [
 ];
 
 export default function Dashboard() {
+  const { addToCart } = useCart();
   return (
     <View style={styles.container}>
       <SearchHeader />
@@ -82,7 +84,10 @@ export default function Dashboard() {
 
               <View style={styles.priceRow}>
                 <Text style={styles.priceText}>{item.price}</Text>
-                <TouchableOpacity style={styles.quickAddButton}>
+                <TouchableOpacity
+                  style={styles.quickAddButton}
+                  onPress={() => addToCart(item)}
+                >
                   <Plus size={16} color="#fff" />
                   <Text style={styles.quickAddText}>Quick Add</Text>
                 </TouchableOpacity>

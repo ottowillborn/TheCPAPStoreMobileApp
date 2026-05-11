@@ -1,8 +1,11 @@
+import { useCart } from "@/context/CartContext";
 import { Tabs } from "expo-router";
 import { Moon, ShoppingBag, ShoppingCart, User } from "lucide-react-native";
 import { StyleSheet } from "react-native";
 
 export default function TabLayout() {
+  const { totalItems } = useCart();
+
   return (
     <Tabs
       screenOptions={{
@@ -48,6 +51,14 @@ export default function TabLayout() {
         name="cart"
         options={{
           title: "Cart",
+          // We only show badge if totalItems > 0, otherwise set to undefined (hidden)
+          tabBarBadge: totalItems > 0 ? totalItems : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: "#FF3B30", // Standard iOS Red
+            color: "white",
+            fontSize: 10,
+            lineHeight: 15,
+          },
           tabBarIcon: ({ color, focused }) => (
             <ShoppingCart
               size={18}

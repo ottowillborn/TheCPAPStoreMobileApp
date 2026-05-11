@@ -1,9 +1,11 @@
 import SearchHeader from "@/app/components/SearchHeader";
+import { CartItem, useCart } from "@/context/CartContext";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react-native";
 import React, { useState } from "react";
 import {
   FlatList,
   Image,
+  ListRenderItem,
   ScrollView,
   StyleSheet,
   Text,
@@ -125,12 +127,13 @@ const BROWSE_ITEMS = [
 
 export default function BrowsePage() {
   const [activeTab, setActiveTab] = useState<string | null>(null);
+  const { addToCart } = useCart();
 
   const toggleTab = (tab: string) => {
     setActiveTab(activeTab === tab ? null : tab);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem: ListRenderItem<CartItem> = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.imageWrapper}>
         <Image
@@ -144,7 +147,10 @@ export default function BrowsePage() {
           {item.title}
         </Text>
         <Text style={styles.priceText}>{item.price}</Text>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => addToCart(item)}
+        >
           <Plus size={14} color="#fff" />
           <Text style={styles.addButtonText}>Add</Text>
         </TouchableOpacity>
