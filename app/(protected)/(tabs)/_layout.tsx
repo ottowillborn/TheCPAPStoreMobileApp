@@ -25,6 +25,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "For You",
+          animation: "fade",
           tabBarIcon: ({ color, focused }) => (
             <Moon
               size={18}
@@ -38,6 +39,7 @@ export default function TabLayout() {
         name="browse"
         options={{
           title: "Shop",
+          animation: "fade",
           tabBarIcon: ({ color, focused }) => (
             <ShoppingBag
               size={18}
@@ -51,6 +53,7 @@ export default function TabLayout() {
         name="cart"
         options={{
           title: "Cart",
+          animation: "fade",
           // We only show badge if totalItems > 0, otherwise set to undefined (hidden)
           tabBarBadge: totalItems > 0 ? totalItems : undefined,
           tabBarBadgeStyle: {
@@ -72,6 +75,7 @@ export default function TabLayout() {
         name="account"
         options={{
           title: "Account",
+          animation: "fade",
           tabBarIcon: ({ color, focused }) => (
             <User
               size={18}

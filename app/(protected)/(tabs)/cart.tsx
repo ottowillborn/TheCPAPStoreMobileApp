@@ -59,7 +59,7 @@ export default function CartPage() {
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.sectionLabel}>SHOPPING BAG</Text>
+          <Text style={styles.sectionLabel}>SHOPPING CART</Text>
           <Text style={styles.title}>{totalItems} Items</Text>
         </View>
 
@@ -72,7 +72,7 @@ export default function CartPage() {
 
       {cart.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Your bag is currently empty.</Text>
+          <Text style={styles.emptyText}>Your cart is currently empty.</Text>
           <TouchableOpacity style={styles.shopAllButton}>
             <Text style={styles.shopAllText}>Shop All Products</Text>
           </TouchableOpacity>
